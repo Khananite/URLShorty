@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Preview shortenerd url - URL Shorty</title>
+    <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon">
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../node_modules/web3/dist/web3.min.js"></script>
+    <script src="assets/js/Abis/jsAbis/abiDonator.js"></script>
+    <script src="assets/js/Abis/jsAbis/abiPreviewUrlShortener.js"></script>
+    <script src="ContractsAddresses/jsAddresses/contractAddresses.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/urlShorty.css">
+    <link rel="stylesheet" href="assets/css/donationBoxStyle.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+
+<body>
+    <section class="hero is-fullheight">
+        <div class="hero-head" id="nav-container">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+   
+                        <div class="navbar-burger" style="color: white;" @click="showNav = !showNav" :class="{ 'is-active': showNav }">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    
+                    <div id="navbarMenu" class="navbar-menu" :class="{ 'is-active': showNav }">
+
+                        <div class="navbar-end">
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" id="connect_wallet">
+                                    <span class="icon">
+                                        <i class="fa fa-google-wallet"></i>
+                                    </span>
+                                    <span>Connect wallet</span>
+                                </a>
+                                <h1 id="wallet_address" hidden></h1>
+                            </span>
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="index.html">
+                                    <span class="icon">
+                                        <i class="fa fa-home"></i>
+                                    </span>
+                                    <span>Home</span>
+                                </a>
+                            </span>   
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" href="#" id="donate_button">
+                                    <span class="icon">
+                                        <i class="fa fa-btc"></i>
+                                    </span>
+                                    <span>Donate</span>
+                                </a>
+                            </span>
+                            <span class="navbar-item">
+                                <a class="button is-white is-outlined" target='_blank' href="https://github.com/Khananite/URLShorty">
+                                    <span class="icon">
+                                        <i class="fa fa-github"></i>
+                                    </span>
+                                    <span>Github</span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>    
+                </div>
+            </nav>
+        </div>
+
+        <div class="modal donation-slider-modal">
+                <div class="modal-background close"></div>
+            <div class="modal-card">
+                <header class="modal-card-head" id="donation_header">
+                    <p class="modal-card-title"><b>Minimum 0.1 ETH is required</b></p>
+                    <button class="delete close" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body" style="color:black">
+                    <form class="form-horizontal form-pricing" role="form">
+        
+                        <div class="donation-slider">
+                            <div class="col-sm-12">
+                                <div id="slider"></div>
+                            </div>
+                        </div>
+            
+                        <div class="form-group">
+                            <div class="col-sm-6" style="text-align: center;">
+                                <label id="text-label" for="amount"><b>ETH:</b></label>
+                                <input type="hidden" id="donation-amount" class="form-control"> 
+                                <p class="donation lead" id="amount-label"></p>
+                                <span class="donation">.00</span>
+                            </div>
+                        </div>           
+            
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="button"id="donationAmount_button" class="btn btn-primary btn-lg btn-block" style="font-size: 1.5em;"><b>Donate</b></button>
+                            </div>
+                        </div>
+                    </form> 
+                </section>
+            </div>
+        </div>
+
+        <div class="modal metamask-not-connected-modal">
+            <div class="modal-background close"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Not connected to metamask</p>
+                <button class="delete close" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body" style="color:black">
+                <p>You need to connect your wallet to donate</p>
+              </section>
+            </div>
+        </div>
+        
+        <div class="modal metamask-modal">
+            <div class="modal-background close"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Metamask not detected!!</p>
+                <button class="delete close" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body" style="color:black">
+                <p>Please enable <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en">METAMASK(Goerli network)</a> to continue. Metamask is used to generate and store short urls on the ethereum blockchian.</p>
+              </section>
+            </div>
+        </div>
+
+        <div class="modal metamask-network-modal">
+            <div class="modal-background close"></div>
+            <div class="modal-card">
+              <header class="modal-card-head">
+                <p class="modal-card-title">Metamask -> Goerli</p>
+                <button class="delete close" aria-label="close"></button>
+              </header>
+              <section class="modal-card-body" style="color:black">
+                <p>Please switch Metamask to Goerli test network to proceed</p>
+              </section>
+
+            </div>
+        </div>
+
+        <div class="hero-body">
+            <div class="container has-text-centered" style="top: 4em">
+                <br><br>
+                <div class="column is-6 is-offset-3">
+                    <h1 class="title" style="color:white">
+                        Preview Shortened Url - URL Shorty
+                    </h1>
+                    <h2 class="subtitle" style="color:white">
+                        Powered by <a href="https://ethereum.org">Ethereum</a>
+                    </h2><br>
+                    <div class="box">
+                        <div class="field is-grouped">
+                            <p class="control is-expanded">
+                                <input id='inputted-url' class="input" type="text" placeholder="Enter Short URL">
+                            </p>
+                            <p class="control">
+                                <button id='submitShortUrl_button' onclick="previewShortenedUrl()" class="button is-info">
+                                    Submit
+                                </button>
+                            </p>
+                        </div>
+                        <div>
+                            <img id='spinner' style="width:100px" src="assets/images/spinner.gif">
+                            <p id='info'></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+    <script src="assets/js/Extras/navBarDropdown.js"></script>
+</body>
+
+<script src="assets/js/Extras/dateTimeConverter.js"></script>
+<script src="assets/js/donationSlider.js"></script>
+<script src="assets/js/Extras/validUrlChecker.js"></script>
+<script src="assets/js/Extras/formatAppender.js"></script>
+<script src="assets/js/MetaMaskConnections/metaMaskInstalledChecker.js"></script>
+<script src="assets/js/MetaMaskConnections/walletConnector.js"></script>
+<script src="assets/js/MetaMaskConnections/mmNetworkConnectionChecker.js"></script>
+<script src="assets/js/PurchaserAndDonatorSection/donatorInteractor.js"></script>
+<script src="assets/js/URLShortenerSection/previewUrlShortenerInteractor.js"></script>
+<script src="assets/js/URLShortenerSection/shortUrlRedirector.js"></script>
+</html>

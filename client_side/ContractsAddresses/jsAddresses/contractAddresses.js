@@ -1,0 +1,5 @@
+var customTokenContractAddress = "0xF545e8352B46D50Bc2D4913E90af06b7BA1432bC";
+var normalUrlShortenerContractAddress = "0x31A4520F4230547f93D44c4F71eaa3F84B239D4a";
+var previewUrlShortenerContractAddress = "0x590BbffD1C5B0D1c3F1e57b27c2Ca66Fe61258eD";
+var donatorContractAddress = "0x82DbBE1112A6f55d04d6016501e88581Fb3a05f0";
+var purchaserContractAddress = "0x026f46c4F3BFf627Ea32907De382EeFFbCb5354F";

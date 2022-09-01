@@ -1,0 +1,42 @@
+body, #navbarMenu
+{
+    background-image: url("../images/Dark-background.jpg");
+}
+
+#navbarMenu
+{
+    text-align: center;
+}
+
+/*Centering and aligning the text box and button area (along with the text)*/
+.hero.is-fullheight .hero-body, .hero.is-fullheight-with-navbar .hero-body, .hero.is-halfheight .hero-body
+{
+    align-items: normal !important;
+}
+
+.center
+{
+    text-align: center;
+}
+
+.smaller
+{
+    font-size: 60%;
+}
+
+.small
+{
+    font-size: 70%;
+}
+
+.trucate
+{
+    text-overflow: ellipsis;
+    width: 50px;
+}
+
+table > a
+{
+    color: hotpink !important;
+}
+/*Aligning ends*/
