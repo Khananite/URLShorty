@@ -52,6 +52,7 @@ async function initContracts()
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("purchase_trial_button").addEventListener("click", async ( { target }) => {
+    
     if (window.ethereum)
     {
       //Check user is connected to the Goerli testnet.
