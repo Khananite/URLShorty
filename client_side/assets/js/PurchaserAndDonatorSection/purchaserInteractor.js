@@ -51,6 +51,19 @@ async function initContracts()
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("purchase_trial_button").addEventListener("click", async ( { target }) => {
+    if(await purchaserObject.methods.hasUserPurchasedURLShorty(userWalletAddress).call() == true)
+    {
+      alert("No need for a free trial, you've already purchased URL Shorty. You'll now be redirected to the main page");
+      window.location.href = 'urlShorty.html';
+    }
+    else
+      freeTrial();
+  })
+}
+)
+
+document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("purchase_button").addEventListener("click", async ( { target }) => {
     
     if (window.ethereum)
