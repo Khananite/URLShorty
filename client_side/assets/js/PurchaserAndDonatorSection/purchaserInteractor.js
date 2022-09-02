@@ -52,13 +52,41 @@ async function initContracts()
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("purchase_trial_button").addEventListener("click", async ( { target }) => {
-    if(await purchaserObject.methods.hasUserPurchasedURLShorty(userWalletAddress).call() == true)
+    if (window.ethereum)
     {
-      alert("No need for a free trial, you've already purchased URL Shorty. You'll now be redirected to the main page");
-      window.location.href = 'urlShorty.html';
+      //Check user is connected to the Goerli testnet.
+      checkMetaMaskNetwork();
+      try
+      {
+        //Check if user has an account connected to metamask.
+        if(userWalletAddress)
+        {
+          if(await purchaserObject.methods.hasUserPurchasedURLShorty(userWalletAddress).call() == true)
+          {
+            alert("No need for a free trial, you've already purchased URL Shorty. You'll now be redirected to the main page");
+            window.location.href = 'urlShorty.html';
+          }
+          else
+            freeTrial();
+        }
+        else
+        {         
+          $(".metamask-not-connected-modal").addClass("is-active");  
+          console.log('Not connected to metamask');
+        }
+      }
+      catch(error)
+      {
+        if (error.code === 4001)
+        {
+          console.log('User rejected ethereum accounts request');
+        }
+      }
     }
     else
-      freeTrial();
+    {
+      console.log('window.ethereum not available');
+    }
   })
 }
 )
